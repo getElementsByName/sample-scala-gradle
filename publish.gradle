@@ -1,0 +1,22 @@
+
+
+// signing {
+//     sign publishing.publications.mavenJava
+// }
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            groupId = 'com.github.getElementByName'
+            artifactId = 'project-sample'
+            version = '1.0'
+            from components.java
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+}
