@@ -18,8 +18,9 @@ doc:
 test.open: test
 	x-www-browser ./build/docs/scaladoc/index.html
 
+pub:
+	${GRADLE_CLI} bintrayUpload --info
 publish:
-	${GRADLE_CLI} publish
-
+	${GRADLE_CLI} clean build bintrayUpload --info
 tasks:
 	${GRADLE_CLI} tasks

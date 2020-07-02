@@ -1,22 +1,39 @@
-
-
-// signing {
-//     sign publishing.publications.mavenJava
-// }
-
 publishing {
     publications {
-        myLibrary(MavenPublication) {
-            groupId = 'com.github.getElementByName'
-            artifactId = 'project-sample'
-            version = '1.0'
+        bintray(MavenPublication) {
             from components.java
+            groupId 'com.github.getElementsByName'
+            artifactId 'sample-scala-library'
+            version '0.1.1-alpha.4'
         }
     }
+}
 
-    repositories {
-        mavenLocal()
-        google()
-        jcenter()
+// task printBintrayAuth {
+//     print bintray_user
+//     print bintray_api_key
+// }
+
+bintray {
+    user = bintray_user ? bintray_user : (project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER'))
+    key = bintray_api_key ? bintray_api_key : (project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY'))
+    publications = ['bintray'] // publishing.publications
+    dryRun = false // Whether to run this as dry-run, without deploying
+    publish = false // If version should be auto published after an upload
+    pkg {
+        repo = 'sample-scala-library'
+        name = 'sample-scala-library' // project.name
+        userOrg = 'getelementsbyname' // An optional organization name when the repo belongs to one of the user's orgs
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/getElementsByName/sample-scala-library.git'
+        labels = ['scala', 'sample']
+        publicDownloadNumbers = true
+        attributes = ['getElementsByName': 'sample-scala-library'] //Optional package-level attributes
+        version {
+            name = '0.1.1-alpha.4' // project.version // Bintray logical version name
+            released  = new Date()
+            desc = 'sample scala'
+            attributes = ['sample': 'scala-library']
+        }
     }
 }

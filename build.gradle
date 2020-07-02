@@ -6,11 +6,26 @@
  * user guide available at https://docs.gradle.org/4.4.1/userguide/scala_plugin.html
  */
 
-plugins {
-    id 'maven-publish'
+// publish
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+    }
 }
+apply plugin: 'com.jfrog.bintray'
 
-
+allprojects {
+    repositories {
+        jcenter()
+        maven {url 'https://jitpack.io'}
+    }
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+}
 apply from: 'publish.gradle'
 
 // Apply the scala plugin to add support for Scala
